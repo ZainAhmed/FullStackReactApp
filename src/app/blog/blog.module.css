@@ -14,7 +14,7 @@
   }
 }
 
-@media (max-width: 768) {
+@media (max-width: 768px) {
   .post {
     width: 100%;
   }

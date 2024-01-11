@@ -6,10 +6,10 @@ function AboutPage() {
       <div className={styles.textContainer}>
         <h2 className={styles.subtitle}>About Agency</h2>
         <h1 className={styles.title}>
-          We create digital ideas that are bigger,bolder,braver and better.
+          We create digital ideas that are bigger, bolder, braver and better.
         </h1>
         <p className={styles.desc}>
-          We create digital ideas that are bigger,bolder,braver and better. We
+          We create digital ideas that are bigger, bolder, braver and better. We
           believe in good ideas flexibility and precision. We are the world's
           best consulting & finance solution provider. We provide a wide range
           of web and software development services.
