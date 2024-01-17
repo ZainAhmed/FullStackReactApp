@@ -41,6 +41,7 @@ function Links() {
         )}
       </div>
       <Image
+        className={styles.menuButton}
         src="/menu.png"
         alt=""
         height={30}

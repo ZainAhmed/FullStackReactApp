@@ -1,15 +1,18 @@
-import PostCard from "@/components/postCard/PostCard";
-import styles from "./blog.module.css";
+import { getPosts } from "@/api/api";
+import PostCards from "@/components/postCards/PostCards";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
-function BlogPage() {
+async function BlogPage() {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({ queryKey: ["posts"], queryFn: getPosts });
   return (
-    <div className={styles.container}>
-      {new Array(4).fill(4).map((e, i) => (
-        <div key={i} className={styles.post}>
-          <PostCard />
-        </div>
-      ))}
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <PostCards />
+    </HydrationBoundary>
   );
 }
 
