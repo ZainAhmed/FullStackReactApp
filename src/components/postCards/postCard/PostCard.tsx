@@ -2,9 +2,9 @@
 import Image from "next/image";
 import styles from "./postCard.module.css";
 import Link from "next/link";
-import { PostsType } from "@/api/apiTypes";
+import { PostType } from "@/api/apiTypes";
 
-type PropsType = { post: PostsType };
+type PropsType = { post: PostType };
 function PostCard({ post }: PropsType) {
   return (
     <div className={styles.container}>

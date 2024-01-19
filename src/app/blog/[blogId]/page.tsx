@@ -1,34 +1,38 @@
-import Image from "next/image";
-import styles from "./singlePost.module.css";
+import { getPost } from "@/api/api";
+import FetchUser from "@/components/fetchUser/FetchUser";
+import SinglePost from "@/components/singlePost/SinglePost";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
 
-function SinglePostPage() {
+type PageProps = {
+  params: {
+    blogId: number;
+  };
+  searchParams: { [key: string]: string | undefined };
+};
+
+async function SinglePostPage({ params, searchParams }: PageProps) {
+  const { blogId } = params;
+
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["post"],
+    queryFn: () => getPost(blogId),
+  });
+  const selectedSearch = searchParams?.userId ?? "";
   return (
-    <div className={styles.container}>
-      <div className={styles.imageContainer}>
-        <Image src="/about.png" alt="" fill className={styles.img} />
-      </div>
-      <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
-        <div className={styles.detail}>
-          <Image
-            src="/about.png"
-            alt=""
-            width={50}
-            height={50}
-            className={styles.avatar}
-          />
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Author</span>
-            <span className={styles.detailValue}>Terry Jefferson</span>
-          </div>
-          <div className={styles.detailText}>
-            <span className={styles.detailTitle}>Published</span>
-            <span className={styles.detailValue}>01.01.24</span>
-          </div>
-        </div>
-        <div className={styles.content}>desc</div>
-      </div>
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <SinglePost postId={blogId}>
+        {selectedSearch.length > 0 ? (
+          <FetchUser userId={selectedSearch} />
+        ) : (
+          <>Loading</>
+        )}
+      </SinglePost>
+    </HydrationBoundary>
   );
 }
 
